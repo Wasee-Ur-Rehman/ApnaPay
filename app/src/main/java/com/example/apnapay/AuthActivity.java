@@ -3,6 +3,7 @@ package com.example.apnapay;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,10 @@ public class AuthActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(v -> {
             Intent intent = new Intent(AuthActivity.this, LoginActivity.class);
+            startActivity(intent);
+        });
+        btnSignUp.setOnClickListener(v -> {
+            Intent intent = new Intent(AuthActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
     }
