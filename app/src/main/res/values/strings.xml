@@ -2,4 +2,8 @@
     <string name="app_name">ApnaPay</string>
     <string name="onboarding_desc">Explore now\nto experience the benefits</string>
     <string name="onboarding_urdu_desc">کسی کو بھی چند سیکنڈ میں پیسے بھیجیں اور وصول کریں</string>
+    <string name="log_in_text">Log In</string>
+    <string name="sign_up_text">Sign Up</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
 </resources>
