@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ApnaPay</string>
+    <string name="onboarding_desc">Explore now\nto experience the benefits</string>
+    <string name="onboarding_urdu_desc">کسی کو بھی چند سیکنڈ میں پیسے بھیجیں اور وصول کریں</string>
 </resources>
