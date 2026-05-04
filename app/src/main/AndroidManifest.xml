@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ApnaPay">
         <activity
+            android:name=".itemBankCard"
+            android:exported="false" />
+        <activity
             android:name=".VerifyOTPActivity"
             android:exported="false" />
         <activity

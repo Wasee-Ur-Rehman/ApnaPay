@@ -8,5 +8,12 @@
     <color name="text_main">#000000</color>
     <color name="text_muted">#8E8E93</color>
     <color name="border_light">#E0E0E0</color>
+    <color name="card_grad_start">#8b3dff</color>
+    <color name="card_grad_end">#b873ff</color>
+    <color name="btn_pink">#FF3B6B</color>
+    <color name="btn_blue">#007BFF</color>
+    <color name="bg_white_rounded">#FFFFFF</color>
+    <color name="success_green">#10B981</color>
+    <color name="error_red">#EF4444</color>
 
 </resources>
