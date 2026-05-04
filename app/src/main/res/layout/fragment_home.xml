@@ -45,6 +45,7 @@
             app:layout_constraintTop_toBottomOf="@id/vpCards">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvRequestMoney"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
@@ -72,6 +73,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvLoadMoney"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
@@ -120,6 +122,7 @@
                     android:textColor="@color/text_main"
                     android:textSize="18sp"/>
                 <TextView
+                    android:id="@+id/tvSeeMore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="See More"

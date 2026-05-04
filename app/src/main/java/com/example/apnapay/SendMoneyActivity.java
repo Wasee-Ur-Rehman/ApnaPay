@@ -1,5 +1,6 @@
 package com.example.apnapay;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -8,6 +9,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.button.MaterialButton;
+
 public class SendMoneyActivity extends AppCompatActivity {
 
     @Override
@@ -15,10 +18,12 @@ public class SendMoneyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_send_money);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        MaterialButton btnSendMoney = findViewById(R.id.btnSendMoney);
+        btnSendMoney.setOnClickListener(v -> {
+            Intent intent = new Intent(this, TransferSuccessActivity.class);
+            startActivity(intent);
         });
+
+
     }
 }

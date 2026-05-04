@@ -37,14 +37,11 @@ public class DashboardActivity extends AppCompatActivity {
             } else if (itemId == R.id.nav_cards) {
                 selectedFragment = new MyCardsFragment();
             } else if (itemId == R.id.nav_scan) {
-                // selectedFragment = new ScanFragment(); // Create later
-                selectedFragment = new homeFragment(); // Placeholder
+                selectedFragment = new ScanFragment();
             } else if (itemId == R.id.nav_stats) {
-                // selectedFragment = new StatsFragment(); // Create later
-                selectedFragment = new homeFragment(); // Placeholder
+                selectedFragment = new StatistcsFragment();
             } else if (itemId == R.id.nav_account) {
-                // selectedFragment = new AccountFragment(); // Create later
-                selectedFragment = new homeFragment(); // Placeholder
+                selectedFragment = new AccountFragment();
             }
 
             // Swap the fragment
