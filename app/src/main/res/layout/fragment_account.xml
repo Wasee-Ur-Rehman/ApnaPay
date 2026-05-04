@@ -91,21 +91,125 @@
             android:textSize="14sp"
             android:layout_marginTop="4dp"/>
 
-        <!-- User Details Card -->
+        <!-- Personal Information Card -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="32dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="User Details maybe in fields or something"
-                android:textColor="@color/text_main"
-                android:padding="24dp"/>
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Personal Information"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_main"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Email Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:cardBackgroundColor="#F3F4F6"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_dialog_email"
+                            app:tint="@color/apnapay_purple"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Email Address"
+                            android:textColor="@color/text_muted"
+                            android:textSize="12sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="wasee.rehman@email.com"
+                            android:textColor="@color/text_main"
+                            android:textStyle="bold"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#F3F4F6"
+                    android:layout_marginVertical="16dp"/>
+
+                <!-- Phone Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:cardBackgroundColor="#F3F4F6"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_menu_call"
+                            app:tint="@color/apnapay_purple"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Phone Number"
+                            android:textColor="@color/text_muted"
+                            android:textSize="12sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+92 300 1234567"
+                            android:textColor="@color/text_main"
+                            android:textStyle="bold"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Settings Options Card -->
@@ -126,38 +230,38 @@
 
                 <!-- Option 1: Report Issue -->
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp" android:gravity="center_vertical" android:background="?android:attr/selectableItemBackground">
-                    <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="@color/apnapay_purple" app:cardCornerRadius="12dp" app:cardElevation="0dp">
-                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_report_image" app:tint="@color/white" android:layout_gravity="center"/>
+                    <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="@color/white" app:cardCornerRadius="12dp" app:cardElevation="0dp">
+                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/report"  android:layout_gravity="center"/>
                     </com.google.android.material.card.MaterialCardView>
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="16dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Report an Issue" android:textColor="@color/text_main" android:textStyle="bold"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Help us improve the user experience" android:textColor="@color/text_muted" android:textSize="12sp"/>
                     </LinearLayout>
-                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_media_next" app:tint="@color/text_main"/>
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/right_arrow" app:tint="@color/text_main"/>
                 </LinearLayout>
 
                 <!-- Option 2: About Us -->
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp" android:layout_marginTop="8dp" android:gravity="center_vertical" android:background="?android:attr/selectableItemBackground">
-                    <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="@color/apnapay_purple" app:cardCornerRadius="12dp" app:cardElevation="0dp">
-                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_info_details" app:tint="@color/white" android:layout_gravity="center"/>
+                    <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="@color/white" app:cardCornerRadius="12dp" app:cardElevation="0dp">
+                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/about" android:layout_gravity="center"/>
                     </com.google.android.material.card.MaterialCardView>
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="16dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="About Us" android:textColor="@color/text_main" android:textStyle="bold"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Explanation of our history" android:textColor="@color/text_muted" android:textSize="12sp"/>
                     </LinearLayout>
-                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_media_next" app:tint="@color/text_main"/>
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/right_arrow" app:tint="@color/text_main"/>
                 </LinearLayout>
 
                 <!-- Option 3: Log out -->
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp" android:layout_marginTop="8dp" android:gravity="center_vertical" android:background="?android:attr/selectableItemBackground">
-                    <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="@color/apnapay_purple" app:cardCornerRadius="12dp" app:cardElevation="0dp">
-                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_lock_power_off" app:tint="@color/white" android:layout_gravity="center"/>
+                    <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="@color/white" app:cardCornerRadius="12dp" app:cardElevation="0dp">
+                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/logout" android:layout_gravity="center"/>
                     </com.google.android.material.card.MaterialCardView>
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="16dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Log out" android:textColor="@color/text_main" android:textStyle="bold"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Securely sign out of your account" android:textColor="@color/text_muted" android:textSize="12sp"/>
                     </LinearLayout>
-                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_media_next" app:tint="@color/text_main"/>
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/right_arrow" app:tint="@color/text_main"/>
                 </LinearLayout>
 
             </LinearLayout>

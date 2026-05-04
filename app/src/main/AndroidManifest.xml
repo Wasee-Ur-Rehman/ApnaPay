@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ApnaPay">
         <activity
+            android:name=".TransactionHistory"
+            android:exported="false" />
+        <activity
             android:name=".TransferSuccessActivity"
             android:exported="false" />
         <activity
