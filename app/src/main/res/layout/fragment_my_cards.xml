@@ -24,6 +24,7 @@
                 android:layout_height="24dp"
                 android:src="@drawable/back"
                 app:tint="@color/text_main"
+                android:layout_marginTop="40dp"
                 android:layout_centerVertical="true"/>
 
             <TextView
@@ -71,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
+
             app:cardBackgroundColor="@color/white">
 
             <LinearLayout
@@ -90,7 +91,6 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding=""
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -121,7 +121,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
             app:cardBackgroundColor="@color/white">
 
             <LinearLayout

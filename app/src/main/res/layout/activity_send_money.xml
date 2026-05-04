@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_send_gradient"
+    android:padding="24dp">
+
+    <!-- Top Bar -->
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/back"
+        app:tint="@color/text_main"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Money"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_main"
+        app:layout_constraintTop_toTopOf="@id/btnBack"
+        app:layout_constraintBottom_toBottomOf="@id/btnBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Available Balance Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/balanceCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:cardBackgroundColor="#EADDFF"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toBottomOf="@id/btnBack">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:elevation="5dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available Balance"
+                android:textColor="@color/apnapay_purple_dark"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rs. 9,200"
+                android:textColor="@color/apnapay_purple_dark"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Amount Input -->
+    <TextView
+        android:id="@+id/lblAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount to send"
+        android:textColor="@color/text_main"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/balanceCard"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <EditText
+        android:id="@+id/etAmount"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_input"
+        android:hint="Rs. 0.00"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="@color/apnapay_purple"
+        android:paddingHorizontal="16dp"
+        android:inputType="numberDecimal"
+        app:layout_constraintTop_toBottomOf="@id/lblAmount"/>
+
+    <!-- Recipient Input -->
+    <TextView
+        android:id="@+id/lblRecipient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recipient Account Number"
+        android:textColor="@color/text_main"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/etAmount"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- We use a RelativeLayout here to easily put the Contact Book icon inside the input -->
+    <RelativeLayout
+        android:id="@+id/recipientContainer"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_input"
+        app:layout_constraintTop_toBottomOf="@id/lblRecipient">
+
+        <EditText
+            android:id="@+id/etRecipient"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="Enter account number"
+            android:paddingHorizontal="16dp"
+            android:inputType="number"
+            android:layout_toStartOf="@id/btnContacts"/>
+
+        <ImageView
+            android:id="@+id/btnContacts"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/contact_book"
+            app:tint="@color/text_muted"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"/>
+    </RelativeLayout>
+
+    <!-- Send Button pinned to bottom -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSendMoney"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Send Money"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:cornerRadius="12dp"
+        app:backgroundTint="@color/apnapay_purple"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

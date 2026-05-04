@@ -2,6 +2,7 @@ package com.example.apnapay;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +36,14 @@ public class LoginActivity extends AppCompatActivity {
         tvForgotPassword.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
             startActivity(intent);
+        });
+        
+        Button btnSubmitLogin = findViewById(R.id.btnSubmitLogin);
+        btnSubmitLogin.setOnClickListener(v -> {
+            // In a real app, verify Firebase Auth here first!
+            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+            startActivity(intent);
+            finish(); // Close LoginActivity so user can't press back to go to login
         });
 
     }
