@@ -25,14 +25,27 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <androidx.viewpager2.widget.ViewPager2
+<!--            We will use view pager for mul;tiple cards in future-->
+<!--        <androidx.viewpager2.widget.ViewPager2-->
+<!--            android:id="@+id/vpCards"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="24dp"-->
+<!--            android:paddingHorizontal="16dp"-->
+<!--            android:clipToPadding="false"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tvGreeting" />-->
+
+        <include
             android:id="@+id/vpCards"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            layout="@layout/activity_item_bank_card"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="24dp"
-            android:paddingHorizontal="16dp"
-            android:clipToPadding="false"
-            app:layout_constraintTop_toBottomOf="@id/tvGreeting" />
+            app:layout_constraintTop_toBottomOf="@id/tvGreeting"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <LinearLayout
             android:id="@+id/actionButtonsLayout"
