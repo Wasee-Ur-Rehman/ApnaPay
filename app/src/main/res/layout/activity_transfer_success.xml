@@ -73,7 +73,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$901.00"
+                android:text="Rs. 903.00"
                 android:textColor="@color/text_main"
                 android:textSize="36sp"
                 android:textStyle="bold"
@@ -90,17 +90,17 @@
             <!-- Details -->
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Total transfer" android:textColor="@color/text_muted"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="$900.00" android:textColor="@color/text_main" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rs. 900.00" android:textColor="@color/text_main" android:textStyle="bold"/>
             </LinearLayout>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="12dp">
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Admin fee" android:textColor="@color/text_muted"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="$1.00" android:textColor="@color/text_main" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rs. 3.00" android:textColor="@color/text_main" android:textStyle="bold"/>
             </LinearLayout>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="12dp">
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Total" android:textColor="@color/text_main" android:textStyle="bold"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="$901.00" android:textColor="@color/success_green" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rs. 903.00" android:textColor="@color/success_green" android:textStyle="bold"/>
             </LinearLayout>
 
             <!-- Info Box -->
