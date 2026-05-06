@@ -23,6 +23,8 @@ import androidx.credentials.GetCredentialResponse;
 import androidx.credentials.exceptions.GetCredentialException;
 import androidx.credentials.exceptions.NoCredentialException;
 
+import com.example.apnapay.data.Db;
+import com.example.apnapay.data.FirebaseRepository;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -94,15 +96,9 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             if (user != null) {
-                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-                                Map<String, Object> data = new HashMap<>();
-                                data.put("uid", user.getUid());
-                                data.put("name", "");
-                                data.put("email", email);
-                                data.put("balance", 0);
-                                ref.updateChildren(data);
-                                // Go to Login after successful signup
-                                goToLogin();
+                                // Ensure we initialize DB URL
+                                com.google.firebase.database.FirebaseDatabase.getInstance(Db.db().getReference().toString());
+                                FirebaseRepository.ensureUserBootstrap(user, this::goToLogin);
                             }
                         } else {
                             Toast.makeText(SignUpActivity.this, "Sign up failed: " + (task.getException()!=null?task.getException().getMessage():"Unknown error"), Toast.LENGTH_SHORT).show();
@@ -213,18 +209,10 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void upsertUserAndGo(FirebaseUser user) {
-        // Navigate immediately; then write user to DB
         Intent i = new Intent(SignUpActivity.this, DashboardActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
         finish();
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("uid", user.getUid());
-        updates.put("name", user.getDisplayName());
-        updates.put("email", user.getEmail());
-        updates.put("balance", 0);
-        ref.updateChildren(updates);
+        FirebaseRepository.ensureUserBootstrap(user, () -> {});
     }
 }

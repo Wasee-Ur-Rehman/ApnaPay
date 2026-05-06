@@ -25,15 +25,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-<!--            We will use view pager for mul;tiple cards in future-->
-<!--        <androidx.viewpager2.widget.ViewPager2-->
-<!--            android:id="@+id/vpCards"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="24dp"-->
-<!--            android:paddingHorizontal="16dp"-->
-<!--            android:clipToPadding="false"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/tvGreeting" />-->
+        <!-- Added account number field under greeting -->
+        <TextView
+            android:id="@+id/tvAccountNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Account No: 0000000000"
+            android:textColor="@color/text_muted"
+            android:textSize="14sp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/tvGreeting"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <include
             android:id="@+id/vpCards"
@@ -43,7 +46,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/tvGreeting"
+            app:layout_constraintTop_toBottomOf="@id/tvAccountNumber"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -148,7 +151,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:nestedScrollingEnabled="false" />
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintTop_toBottomOf="@id/actionButtonsLayout" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

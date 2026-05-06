@@ -19,6 +19,8 @@ import androidx.credentials.GetCredentialResponse;
 import androidx.credentials.exceptions.GetCredentialException;
 import androidx.credentials.exceptions.NoCredentialException;
 
+import com.example.apnapay.data.Db;
+import com.example.apnapay.data.FirebaseRepository;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -70,6 +72,8 @@ public class AuthActivity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
+        // Force FirebaseDatabase to use project URL early (optional safety)
+        com.google.firebase.database.FirebaseDatabase.getInstance(Db.db().getReference().toString());
         googleSignInClient = GoogleSignIn.getClient(this, gso);
         googleFallbackLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getData() == null) {
@@ -171,11 +175,6 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void upsertUser(FirebaseUser user) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("uid", user.getUid());
-        updates.put("name", user.getDisplayName());
-        updates.put("email", user.getEmail());
-        ref.updateChildren(updates);
+        FirebaseRepository.ensureUserBootstrap(user, () -> {});
     }
 }

@@ -8,4 +8,11 @@
     <string name="continue_with_facebook">Continue with Facebook</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rs_amount">Rs. %.2f</string>
+    <string name="account_no_fmt">Account No: %1$s</string>
+    <string name="copied_account_no">Account number copied</string>
+    <string name="expiry_fmt">Exp %1$s</string>
+    <string name="cvv_fmt">CVV   %1$s</string>
+    <string name="received">Received</string>
+    <string name="sent">Sent</string>
 </resources>
