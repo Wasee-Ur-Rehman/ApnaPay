@@ -49,6 +49,17 @@ public class SendMoneyActivity extends AppCompatActivity {
         // Back button (assuming you have an ImageView with id btnBack)
         findViewById(R.id.btnBack).setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
+        // If launched from QR scanner, prefill recipient
+        Intent it = getIntent();
+        if (it != null) {
+            String qrAcc = it.getStringExtra("QR_ACCOUNT_NUMBER");
+            if (qrAcc != null && !qrAcc.trim().isEmpty()) {
+                etRecipient.setText(qrAcc.trim());
+                // Optionally move cursor to amount field for convenience
+                etAmount.requestFocus();
+            }
+        }
+
         // Fetch and display live balance
         setupLiveBalance();
     }
