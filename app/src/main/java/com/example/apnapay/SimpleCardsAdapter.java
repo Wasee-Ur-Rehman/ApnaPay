@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -25,15 +26,20 @@ public class SimpleCardsAdapter extends RecyclerView.Adapter<SimpleCardsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull VH h, int position) {
-        Map<String,Object> m = cards.get(position);
-        String number = (String)m.get("cardNumber");
-        String holder = (String)m.get("cardHolderName");
-        String expiry = (String)m.get("expiryDate");
-        String cvv = (String)m.get("cvv");
+
+        java.util.Map<String, Object> m = cards.get(position);
+
+        // Use String.valueOf to avoid NullPointerExceptions if data is missing
+        String number = m.getOrDefault("cardNumber", "•••• •••• •••• ••••").toString();
+        String holder = m.getOrDefault("cardHolderName", "User").toString();
+        String expiry = m.getOrDefault("expiryDate", "••/••").toString();
+        String cvv = m.getOrDefault("cvv", "•••").toString();
+
+        // Find views by ID
         ((TextView)h.itemView.findViewById(R.id.tvCardNumber)).setText(number);
         ((TextView)h.itemView.findViewById(R.id.tvCardHolder)).setText(holder);
-        ((TextView)h.itemView.findViewById(R.id.tvExpiry)).setText("Exp "+expiry);
-        ((TextView)h.itemView.findViewById(R.id.tvCvv)).setText("CVV   "+cvv);
+        ((TextView)h.itemView.findViewById(R.id.tvExpiry)).setText("Exp " + expiry);
+        ((TextView)h.itemView.findViewById(R.id.tvCvv)).setText("CVV " + cvv);
     }
 
     @Override
