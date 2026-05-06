@@ -17,20 +17,30 @@ public class TransferSuccessActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_transfer_success);
 
-        // Get the amount that was transferred
+        // Get the data passed from SendMoneyActivity
         double amount = getIntent().getDoubleExtra("AMOUNT", 0.0);
         String receiverName = getIntent().getStringExtra("RECEIVER_NAME");
 
-        // Display the amount (Assuming you have a TextView with id tvSuccessAmount in your XML)
+        // Format the amount once
+        String formattedAmount = String.format(java.util.Locale.US, "Rs. %.2f", amount);
+
+        // Map all the TextViews
         TextView tvSuccessAmount = findViewById(R.id.tvSuccessAmount);
-        if (tvSuccessAmount != null) {
-            tvSuccessAmount.setText(String.format(java.util.Locale.US, "Rs. %.2f", amount));
-        }
+        TextView tvDetailTransferAmount = findViewById(R.id.tvDetailTransferAmount);
+        TextView tvDetailTotalAmount = findViewById(R.id.tvDetailTotalAmount);
         TextView tvSuccessRecipient = findViewById(R.id.tvSuccessRecipient);
+
+        // Set the amounts
+        if (tvSuccessAmount != null) tvSuccessAmount.setText(formattedAmount);
+        if (tvDetailTransferAmount != null) tvDetailTransferAmount.setText(formattedAmount);
+        if (tvDetailTotalAmount != null) tvDetailTotalAmount.setText(formattedAmount);
+
+        // Set the recipient
         if (tvSuccessRecipient != null && receiverName != null) {
             tvSuccessRecipient.setText(receiverName);
         }
 
+        // Home Button Logic
         MaterialButton btnBackToHome = findViewById(R.id.btnBackToHome);
         if (btnBackToHome != null) {
             btnBackToHome.setOnClickListener(v -> {
