@@ -75,18 +75,20 @@
 
         <!-- Name & Location -->
         <TextView
+            android:id="@+id/tvProfileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wasee Ur Rehman Ch"
+            android:text="Loading..."
             android:textColor="@color/text_main"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"/>
 
         <TextView
+            android:id="@+id/tvProfileLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lahore, Punjab, Pakistan"
+            android:text="ApnaPay Member"
             android:textColor="@color/text_muted"
             android:textSize="14sp"
             android:layout_marginTop="4dp"/>
@@ -149,9 +151,10 @@
                             android:textColor="@color/text_muted"
                             android:textSize="12sp"/>
                         <TextView
+                            android:id="@+id/tvProfileEmail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="wasee.rehman@email.com"
+                            android:text="..."
                             android:textColor="@color/text_main"
                             android:textStyle="bold"
                             android:textSize="14sp"/>
@@ -165,7 +168,7 @@
                     android:background="#F3F4F6"
                     android:layout_marginVertical="16dp"/>
 
-                <!-- Phone Row -->
+                <!-- Account Number Row -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -182,7 +185,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
-                            android:src="@android:drawable/ic_menu_call"
+                            android:src="@drawable/contact_book"
                             app:tint="@color/apnapay_purple"/>
                     </com.google.android.material.card.MaterialCardView>
 
@@ -195,13 +198,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Phone Number"
+                            android:text="Account Number"
                             android:textColor="@color/text_muted"
                             android:textSize="12sp"/>
                         <TextView
+                            android:id="@+id/tvProfileAccountNo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="+92 300 1234567"
+                            android:text="..."
                             android:textColor="@color/text_main"
                             android:textStyle="bold"
                             android:textSize="14sp"/>
@@ -229,7 +233,9 @@
                 android:padding="16dp">
 
                 <!-- Option 1: Report Issue -->
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp" android:gravity="center_vertical" android:background="?android:attr/selectableItemBackground">
+                <LinearLayout
+                    android:id="@+id/btnReportIssue"
+                    android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp" android:gravity="center_vertical" android:background="?android:attr/selectableItemBackground">
                     <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="@color/white" app:cardCornerRadius="12dp" app:cardElevation="0dp">
                         <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/report"  android:layout_gravity="center"/>
                     </com.google.android.material.card.MaterialCardView>
@@ -241,7 +247,9 @@
                 </LinearLayout>
 
                 <!-- Option 2: About Us -->
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp" android:layout_marginTop="8dp" android:gravity="center_vertical" android:background="?android:attr/selectableItemBackground">
+                <LinearLayout
+                    android:id="@+id/btnAboutUs"
+                    android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp" android:layout_marginTop="8dp" android:gravity="center_vertical" android:background="?android:attr/selectableItemBackground">
                     <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="@color/white" app:cardCornerRadius="12dp" app:cardElevation="0dp">
                         <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/about" android:layout_gravity="center"/>
                     </com.google.android.material.card.MaterialCardView>
@@ -253,7 +261,9 @@
                 </LinearLayout>
 
                 <!-- Option 3: Log out -->
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp" android:layout_marginTop="8dp" android:gravity="center_vertical" android:background="?android:attr/selectableItemBackground">
+                <LinearLayout
+                    android:id="@+id/btnLogout"
+                    android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp" android:layout_marginTop="8dp" android:gravity="center_vertical" android:background="?android:attr/selectableItemBackground">
                     <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="@color/white" app:cardCornerRadius="12dp" app:cardElevation="0dp">
                         <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/logout" android:layout_gravity="center"/>
                     </com.google.android.material.card.MaterialCardView>
