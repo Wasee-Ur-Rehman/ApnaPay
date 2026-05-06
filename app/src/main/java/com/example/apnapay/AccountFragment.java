@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AccountFragment extends Fragment {
 
-    private TextView tvProfileName, tvProfileEmail, tvProfileAccountNo;
+    private TextView tvProfileName, tvProfileEmail, tvProfileAccountNo, tvProfileInitials;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -39,6 +39,7 @@ public class AccountFragment extends Fragment {
         tvProfileName = view.findViewById(R.id.tvProfileName);
         tvProfileEmail = view.findViewById(R.id.tvProfileEmail);
         tvProfileAccountNo = view.findViewById(R.id.tvProfileAccountNo);
+        tvProfileInitials = view.findViewById(R.id.tvProfileInitials); // ADDED
 
         LinearLayout btnReportIssue = view.findViewById(R.id.btnReportIssue);
         LinearLayout btnAboutUs = view.findViewById(R.id.btnAboutUs);
@@ -75,8 +76,10 @@ public class AccountFragment extends Fragment {
 
                     if (name != null && !name.trim().isEmpty()) {
                         tvProfileName.setText(name);
+                        tvProfileInitials.setText(getInitials(name)); // Generate initials
                     } else {
                         tvProfileName.setText("ApnaPay User");
+                        tvProfileInitials.setText("AU");
                     }
 
                     if (accountNo != null) {
@@ -87,9 +90,26 @@ public class AccountFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(requireContext(), "Failed to load account data.", Toast.LENGTH_SHORT).show();
+                if (isAdded()) {
+                    Toast.makeText(requireContext(), "Failed to load account data.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    // Helper function to extract initials from the full name
+    private String getInitials(String name) {
+        String[] parts = name.trim().split("\\s+");
+        if (parts.length >= 2) {
+            // First letter of first name + First letter of last name
+            return (parts[0].substring(0, 1) + parts[1].substring(0, 1)).toUpperCase();
+        } else if (parts[0].length() >= 2) {
+            // First two letters of single name
+            return parts[0].substring(0, 2).toUpperCase();
+        } else {
+            // Single letter name fallback
+            return parts[0].toUpperCase();
+        }
     }
 
     private void showReportIssueDialog() {
