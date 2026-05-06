@@ -27,6 +27,7 @@ public class TransactionHistory extends AppCompatActivity {
     private TransactionAdapter txAdapter;
     private List<itemTransaction> txData = new ArrayList<>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,17 +60,22 @@ public class TransactionHistory extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 txData.clear();
                 for (DataSnapshot child : snapshot.getChildren()) {
+                    // REPLACE the parsing logic inside the for-loop:
                     String sender = child.child("senderUid").getValue(String.class);
                     String receiver = child.child("receiverUid").getValue(String.class);
+                    String senderName = child.child("senderName").getValue(String.class); // ADD THIS
+                    String receiverName = child.child("receiverName").getValue(String.class); // ADD THIS
                     Double amount = child.child("amount").getValue(Double.class);
                     Long ts = child.child("timestamp").getValue(Long.class);
                     String type = child.child("type").getValue(String.class);
 
                     if (sender == null || receiver == null || amount == null || ts == null) continue;
+                    if (senderName == null) senderName = "Unknown User";
+                    if (receiverName == null) receiverName = "Unknown User";
 
-                    // Only add if the current user is involved
                     if (currentUid.equals(sender) || currentUid.equals(receiver)) {
-                        txData.add(new itemTransaction(sender, receiver, amount, ts, type));
+                        // Pass the new arguments
+                        txData.add(new itemTransaction(sender, receiver, amount, ts, type, senderName, receiverName));
                     }
                 }
 

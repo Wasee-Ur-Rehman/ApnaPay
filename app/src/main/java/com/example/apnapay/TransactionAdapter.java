@@ -32,14 +32,35 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public void onBindViewHolder(@NonNull VH h, int position) {
         itemTransaction it = items.get(position);
         boolean incoming = currentUid.equals(it.receiverUid);
-        h.tvTitle.setText(incoming ? h.itemView.getContext().getString(R.string.received) : h.itemView.getContext().getString(R.string.sent));
+
+        // Determine the name to show
+        String displayName = incoming ? it.senderName : it.receiverName;
+        if (displayName == null) displayName = "Unknown";
+
+        // Set Title
+        h.tvTitle.setText(incoming ? "Received from " + displayName : "Sent to " + displayName);
+
+        // Set Amount
         String amtTxt = String.format(Locale.US, (incoming ? "+Rs. %.2f" : "-Rs. %.2f"), it.amount);
         h.tvAmount.setText(amtTxt);
         int color = h.itemView.getResources().getColor(incoming ? R.color.success_green : R.color.error_red);
         h.tvAmount.setTextColor(color);
-        SimpleDateFormat df = new SimpleDateFormat("d MMM, yyyy  •  HH:mm", Locale.US);
+
+        // Set Date
+        java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("d MMM, yyyy  •  HH:mm", Locale.US);
         h.tvDate.setText(df.format(new java.util.Date(it.timestamp)));
-        h.tvInitials.setText("TX");
+
+        // Generate Initials (e.g., "John Doe" -> "JD")
+        String initials = "TX";
+        if (!displayName.equals("Unknown") && !displayName.isEmpty()) {
+            String[] parts = displayName.trim().split("\\s+");
+            if (parts.length >= 2) {
+                initials = (parts[0].substring(0, 1) + parts[1].substring(0, 1)).toUpperCase();
+            } else {
+                initials = parts[0].substring(0, Math.min(2, parts[0].length())).toUpperCase();
+            }
+        }
+        h.tvInitials.setText(initials);
     }
 
     @Override

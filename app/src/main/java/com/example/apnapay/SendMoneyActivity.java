@@ -31,6 +31,8 @@ public class SendMoneyActivity extends AppCompatActivity {
     private TextView tvAvailableBalance;
     private double currentSenderBalance = 0.0;
 
+    private String currentSenderName = "Unknown User";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,23 +57,26 @@ public class SendMoneyActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) return;
 
-        DatabaseReference ref = Db.db().getReference("Users").child(user.getUid()).child("balance");
+        // Listen to the user's ROOT node instead of just balance to get the name too
+        DatabaseReference ref = Db.db().getReference("Users").child(user.getUid());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    Double b = snapshot.getValue(Double.class);
+                    Double b = snapshot.child("balance").getValue(Double.class);
                     currentSenderBalance = (b != null) ? b : 0.0;
                     if (tvAvailableBalance != null) {
                         tvAvailableBalance.setText(String.format(java.util.Locale.US, "Rs. %.2f", currentSenderBalance));
                     }
+
+                    String name = snapshot.child("name").getValue(String.class);
+                    if (name != null && !name.trim().isEmpty()) {
+                        currentSenderName = name;
+                    }
                 }
             }
-
             @Override
-            public void onCancelled(DatabaseError error) {
-                Toast.makeText(SendMoneyActivity.this, "Failed to load balance", Toast.LENGTH_SHORT).show();
-            }
+            public void onCancelled(DatabaseError error) { }
         });
     }
 
@@ -119,6 +124,11 @@ public class SendMoneyActivity extends AppCompatActivity {
                     String receiverUid = child.getKey();
                     String receiverName = child.child("name").getValue(String.class);
                     Double receiverBalance = child.child("balance").getValue(Double.class);
+                    receiverName = child.child("name").getValue(String.class);
+                    // Fallback if name is missing in DB
+                    if (receiverName == null || receiverName.trim().isEmpty()) {
+                        receiverName = "Unknown User";
+                    }
                     if (receiverBalance == null) receiverBalance = 0.0;
 
                     if (sender.getUid().equals(receiverUid)) {
@@ -126,8 +136,9 @@ public class SendMoneyActivity extends AppCompatActivity {
                         return;
                     }
 
+                    // Pass receiverName to confirmation
                     confirmAndTransfer(sender.getUid(), receiverUid, receiverName, receiverBalance, amount);
-                    break; // Only process the first match
+                    break;
                 }
             }
 
@@ -142,42 +153,40 @@ public class SendMoneyActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle("Confirm Transfer")
                 .setMessage("Send Rs. " + amount + " to " + receiverName + "?")
-                .setPositiveButton("Send", (dialog, which) -> performAtomicTransfer(senderUid, receiverUid, receiverBalance, amount))
+                .setPositiveButton("Send", (dialog, which) -> performAtomicTransfer(senderUid, receiverUid, receiverName, receiverBalance, amount))
                 .setNegativeButton("Cancel", null)
                 .show();
     }
 
-    private void performAtomicTransfer(String senderUid, String receiverUid, double receiverBalance, double amount) {
+    private void performAtomicTransfer(String senderUid, String receiverUid, String receiverName, double receiverBalance, double amount) {
         DatabaseReference root = Db.db().getReference();
         String txId = root.child("Transactions").push().getKey();
 
-        // Prepare the transaction record
         Map<String, Object> tx = new HashMap<>();
         tx.put("transactionId", txId);
         tx.put("senderUid", senderUid);
         tx.put("receiverUid", receiverUid);
+        tx.put("senderName", currentSenderName); // Save Sender Name
+        tx.put("receiverName", receiverName);    // Save Receiver Name
         tx.put("amount", amount);
         tx.put("timestamp", System.currentTimeMillis());
         tx.put("type", "P2P_TRANSFER");
 
-        // Prepare the ATOMIC multi-path update
         Map<String, Object> updates = new HashMap<>();
         updates.put("Users/" + senderUid + "/balance", currentSenderBalance - amount);
         updates.put("Users/" + receiverUid + "/balance", receiverBalance + amount);
         updates.put("Transactions/" + txId, tx);
 
-        // Execute all updates simultaneously
         root.updateChildren(updates).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(SendMoneyActivity.this, "Transfer Successful!", Toast.LENGTH_SHORT).show();
-
-                // Go to Success Screen and pass the amount
                 Intent intent = new Intent(SendMoneyActivity.this, TransferSuccessActivity.class);
                 intent.putExtra("AMOUNT", amount);
+                intent.putExtra("RECEIVER_NAME", receiverName); // Pass name to Success UI
                 startActivity(intent);
-                finish(); // Close SendMoneyActivity
+                finish();
             } else {
-                Toast.makeText(SendMoneyActivity.this, "Transfer Failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(SendMoneyActivity.this, "Transfer Failed", Toast.LENGTH_LONG).show();
             }
         });
     }

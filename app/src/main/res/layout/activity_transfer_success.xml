@@ -97,6 +97,11 @@
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Admin fee" android:textColor="@color/text_muted"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rs. 3.00" android:textColor="@color/text_main" android:textStyle="bold"/>
             </LinearLayout>
+            <!-- Add this Recipient row between "Total transfer" and "Admin fee" -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="12dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Recipient" android:textColor="@color/text_muted"/>
+                <TextView android:id="@+id/tvSuccessRecipient" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Unknown User" android:textColor="@color/text_main" android:textStyle="bold"/>
+            </LinearLayout>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="12dp">
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Total" android:textColor="@color/text_main" android:textStyle="bold"/>

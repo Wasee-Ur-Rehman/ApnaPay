@@ -165,14 +165,22 @@ public class homeFragment extends Fragment {
             @Override public void onDataChange(@NonNull DataSnapshot snapshot) {
                 txData.clear();
                 for (DataSnapshot child : snapshot.getChildren()) {
+
                     String sender = child.child("senderUid").getValue(String.class);
                     String receiver = child.child("receiverUid").getValue(String.class);
+                    String senderName = child.child("senderName").getValue(String.class); // ADD THIS
+                    String receiverName = child.child("receiverName").getValue(String.class); // ADD THIS
                     Double amount = child.child("amount").getValue(Double.class);
                     Long ts = child.child("timestamp").getValue(Long.class);
                     String type = child.child("type").getValue(String.class);
+
                     if (sender == null || receiver == null || amount == null || ts == null) continue;
+                    if (senderName == null) senderName = "Unknown User";
+                    if (receiverName == null) receiverName = "Unknown User";
+
                     if (user.getUid().equals(sender) || user.getUid().equals(receiver)) {
-                        txData.add(new itemTransaction(sender, receiver, amount, ts, type));
+                        // Pass the new arguments
+                        txData.add(new itemTransaction(sender, receiver, amount, ts, type, senderName, receiverName));
                     }
                 }
                 txData.sort((a,b) -> Long.compare(b.timestamp, a.timestamp));

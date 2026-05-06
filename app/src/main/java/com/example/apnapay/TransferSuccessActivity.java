@@ -19,11 +19,16 @@ public class TransferSuccessActivity extends AppCompatActivity {
 
         // Get the amount that was transferred
         double amount = getIntent().getDoubleExtra("AMOUNT", 0.0);
+        String receiverName = getIntent().getStringExtra("RECEIVER_NAME");
 
         // Display the amount (Assuming you have a TextView with id tvSuccessAmount in your XML)
         TextView tvSuccessAmount = findViewById(R.id.tvSuccessAmount);
         if (tvSuccessAmount != null) {
             tvSuccessAmount.setText(String.format(java.util.Locale.US, "Rs. %.2f", amount));
+        }
+        TextView tvSuccessRecipient = findViewById(R.id.tvSuccessRecipient);
+        if (tvSuccessRecipient != null && receiverName != null) {
+            tvSuccessRecipient.setText(receiverName);
         }
 
         MaterialButton btnBackToHome = findViewById(R.id.btnBackToHome);
