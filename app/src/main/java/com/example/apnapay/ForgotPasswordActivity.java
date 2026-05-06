@@ -38,8 +38,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
             mAuth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    Toast.makeText(this, "Reset email sent. Please check your inbox.", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(ForgotPasswordActivity.this, VerifyOTPActivity.class));
+                    Toast.makeText(this, "Reset link sent. Check your email.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ForgotPasswordActivity.this, VerifyOTPActivity.class);
+                    intent.putExtra("email", email);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(this, "Failed to send reset email.", Toast.LENGTH_SHORT).show();
                 }
