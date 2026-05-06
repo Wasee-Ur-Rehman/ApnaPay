@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.DatabaseException;
 
 import com.example.apnapay.data.Db;
 
@@ -64,10 +65,19 @@ public class MyCardsFragment extends Fragment {
         DatabaseReference userRef = Db.db().getReference("Users").child(user.getUid());
         userRef.addValueEventListener(new ValueEventListener() {
             @Override public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Number n = snapshot.child("balance").getValue(Number.class);
-                if (n != null) {
-                    double balance = n.doubleValue();
-                    tvBalance.setText(getString(R.string.rs_amount, balance));
+                Double bal = null;
+                try {
+                    bal = snapshot.child("balance").getValue(Double.class);
+                } catch (DatabaseException ignored) { }
+                if (bal == null) {
+                    Long l = null;
+                    try {
+                        l = snapshot.child("balance").getValue(Long.class);
+                    } catch (DatabaseException ignored) { }
+                    if (l != null) bal = l.doubleValue();
+                }
+                if (bal != null) {
+                    tvBalance.setText(getString(R.string.rs_amount, bal));
                 }
             }
             @Override public void onCancelled(@NonNull DatabaseError error) { }
@@ -104,11 +114,16 @@ public class MyCardsFragment extends Fragment {
                 .setTitle("Request New Card")
                 .setMessage("Would you like to email ApnaPay support to issue a new virtual/physical card for your account?")
                 .setPositiveButton("Send Request", (dialog, which) -> {
-                    Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                    emailIntent.setData(Uri.parse("mailto:admin@apnapay.com"));
-                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "New Card Request - " + user.getEmail());
-                    emailIntent.putExtra(Intent.EXTRA_TEXT, "Hello Admin,\n\nI would like to request a new ApnaPay card for my account.\n\nUser ID: " + user.getUid() + "\nEmail: " + user.getEmail() + "\n\nPlease let me know the next steps.\n\nThank you.");
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                    emailIntent.setType("message/rfc822"); // ensures only email apps
 
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"admin@apnapay.com"});
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "New Card Request - " + user.getEmail());
+                    emailIntent.putExtra(Intent.EXTRA_TEXT,
+                            "Hello Admin,\n\nI would like to request a new ApnaPay card for my account.\n\n" +
+                                    "User ID: " + user.getUid() +
+                                    "\nEmail: " + user.getEmail() +
+                                    "\n\nPlease let me know the next steps.\n\nThank you.");
                     try {
                         startActivity(Intent.createChooser(emailIntent, "Send Request via Email..."));
                     } catch (android.content.ActivityNotFoundException ex) {

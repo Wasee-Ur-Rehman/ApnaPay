@@ -34,7 +34,7 @@
             android:id="@+id/cvRequestCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="18dp"
             app:cardCornerRadius="16dp"
             app:cardBackgroundColor="@color/white"
             android:clickable="true"
@@ -79,62 +79,6 @@
                     android:layout_height="24dp"
                     android:src="@drawable/right_arrow"
                     app:tint="@color/text_main"/>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardBackgroundColor="@color/white">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical">
-
-                <!-- Circular Progress Placeholder -->
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    app:cardCornerRadius="25dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/white"
-                    android:layout_marginEnd="16dp"
-                    app:strokeWidth="4dp"
-                    app:strokeColor="@color/apnapay_purple">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="61%"
-                        android:gravity="center"
-                        android:textColor="@color/apnapay_purple"
-                        android:textStyle="bold"/>
-                </com.google.android.material.card.MaterialCardView>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rs. 6,080 out of 8,000"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_main"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Monthly Transfer Limit"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_muted"/>
-                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
