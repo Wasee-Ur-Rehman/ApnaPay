@@ -209,10 +209,12 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void upsertUserAndGo(FirebaseUser user) {
-        Intent i = new Intent(SignUpActivity.this, DashboardActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(i);
-        finish();
-        FirebaseRepository.ensureUserBootstrap(user, () -> {});
+        // Do NOT navigate immediately. Wait for the bootstrap to finish!
+        FirebaseRepository.ensureUserBootstrap(user, () -> {
+            Intent i = new Intent(SignUpActivity.this, DashboardActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+            finish();
+        });
     }
 }

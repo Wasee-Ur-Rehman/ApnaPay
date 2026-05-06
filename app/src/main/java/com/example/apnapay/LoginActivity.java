@@ -210,13 +210,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void upsertUserAndGo(FirebaseUser user) {
-        // Navigate immediately; do not block on DB
-        goToDashboard();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
         Map<String, Object> updates = new HashMap<>();
         updates.put("uid", user.getUid());
-        updates.put("name", user.getDisplayName());
+        updates.put("name", user.getDisplayName() != null ? user.getDisplayName() : "ApnaPay User");
         updates.put("email", user.getEmail());
-        ref.updateChildren(updates);
+
+        // Wait for the database update to succeed BEFORE going to the dashboard
+        ref.updateChildren(updates).addOnCompleteListener(task -> {
+            goToDashboard();
+        });
     }
 }

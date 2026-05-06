@@ -33,11 +33,6 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class AuthActivity extends AppCompatActivity {
 
@@ -72,8 +67,10 @@ public class AuthActivity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
+
         // Force FirebaseDatabase to use project URL early (optional safety)
         com.google.firebase.database.FirebaseDatabase.getInstance(Db.db().getReference().toString());
+
         googleSignInClient = GoogleSignIn.getClient(this, gso);
         googleFallbackLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getData() == null) {
@@ -88,8 +85,12 @@ public class AuthActivity extends AppCompatActivity {
                     mAuth.signInWithCredential(credential).addOnCompleteListener(this, t -> {
                         if (t.isSuccessful()) {
                             FirebaseUser user = t.getResult() != null ? t.getResult().getUser() : mAuth.getCurrentUser();
-                            if (user != null) upsertUser(user); 
-                            goToDashboard();
+                            if (user != null) {
+                                // Only call upsertUser. It will handle the navigation when finished.
+                                upsertUser(user);
+                            } else {
+                                Toast.makeText(this, "Error retrieving user info.", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Toast.makeText(this, "Google sign-in failed.", Toast.LENGTH_SHORT).show();
                         }
@@ -133,8 +134,12 @@ public class AuthActivity extends AppCompatActivity {
                                             .addOnCompleteListener(AuthActivity.this, task -> {
                                                 if (task.isSuccessful()) {
                                                     FirebaseUser user = task.getResult() != null ? task.getResult().getUser() : mAuth.getCurrentUser();
-                                                    if (user != null) upsertUser(user);
-                                                    goToDashboard();
+                                                    if (user != null) {
+                                                        // Only call upsertUser. It will handle the navigation when finished.
+                                                        upsertUser(user);
+                                                    } else {
+                                                        Toast.makeText(AuthActivity.this, "Error retrieving user info.", Toast.LENGTH_SHORT).show();
+                                                    }
                                                 } else {
                                                     Toast.makeText(AuthActivity.this, "Google sign-in failed.", Toast.LENGTH_SHORT).show();
                                                 }
@@ -175,6 +180,10 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void upsertUser(FirebaseUser user) {
-        FirebaseRepository.ensureUserBootstrap(user, () -> {});
+        // This ensures the app waits for FirebaseRepository to finish setting up the DB
+        // before routing the user to the Dashboard.
+        FirebaseRepository.ensureUserBootstrap(user, () -> {
+            goToDashboard();
+        });
     }
 }

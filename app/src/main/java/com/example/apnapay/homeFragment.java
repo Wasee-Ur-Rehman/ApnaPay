@@ -3,6 +3,7 @@ package com.example.apnapay;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,14 +22,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 
 public class homeFragment extends Fragment {
 
@@ -36,6 +34,8 @@ public class homeFragment extends Fragment {
     private RecyclerView rvTransactions;
     private java.util.List<itemTransaction> txData = new java.util.ArrayList<>();
     private TransactionAdapter txAdapter;
+    private String currentAccountNumber = null; // store account number for share/copy
+    private double currentBalance = 0.0;
 
     public homeFragment() { }
 
@@ -60,7 +60,34 @@ public class homeFragment extends Fragment {
         // Add Account No label under greeting
         tvAccountNumber = view.findViewById(R.id.tvAccountNumber);
 
-        view.findViewById(R.id.cvRequestMoney).setOnClickListener(v -> startActivity(new android.content.Intent(getActivity(), SendMoneyActivity.class)));
+        // Add this right after finding your views in onCreateView:
+        tvGreeting.setText("Loading...");
+        tvBalance.setText("Rs. 0.00");
+        tvCardNumber.setText("•••• •••• •••• ••••");
+        tvCardHolder.setText("LOADING...");
+        tvExpiry.setText("••/••");
+        tvCvv.setText("•••");
+
+        // Ensure the card tile text shows 'Send Money' (some devices may keep old resources cached)
+        View cvRequest = view.findViewById(R.id.cvRequestMoney);
+        if (cvRequest instanceof ViewGroup) {
+            ViewGroup vg = (ViewGroup) cvRequest;
+            for (int i=0;i<vg.getChildCount();i++) {
+                View child = vg.getChildAt(i);
+                if (child instanceof TextView) {
+                    ((TextView)child).setText("Send\nMoney");
+                    break;
+                }
+            }
+        }
+
+        // REQUEST MONEY should open SendMoneyActivity (not share)
+        view.findViewById(R.id.cvRequestMoney).setOnClickListener(v -> {
+            Intent it = new Intent(getActivity(), SendMoneyActivity.class);
+            it.putExtra("balance", currentBalance);
+            it.putExtra("accountNumber", currentAccountNumber);
+            startActivity(it);
+        });
         view.findViewById(R.id.cvLoadMoney).setOnClickListener(v -> startActivity(new android.content.Intent(getActivity(), LoadMoney.class)));
         view.findViewById(R.id.tvSeeMore).setOnClickListener(v -> startActivity(new android.content.Intent(getActivity(), TransactionHistory.class)));
 
@@ -82,12 +109,14 @@ public class homeFragment extends Fragment {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.d("ApnaPay", "User snapshot exists="+snapshot.exists());
-                String name = snapshot.child("name").getValue(String.class);
                 Double balance = snapshot.child("balance").getValue(Double.class);
                 String accountNumber = snapshot.child("accountNumber").getValue(String.class);
-                if (name != null) tvGreeting.setText("Hi " + name);
-                if (balance != null) tvBalance.setText(getString(R.string.rs_amount, balance));
+                if (balance != null) {
+                    currentBalance = balance;
+                    tvBalance.setText(getString(R.string.rs_amount, balance));
+                }
                 if (accountNumber != null) {
+                    currentAccountNumber = accountNumber;
                     tvAccountNumber.setText(getString(R.string.account_no_fmt, accountNumber));
                     tvAccountNumber.setOnClickListener(v -> {
                         ClipboardManager cm = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -113,7 +142,11 @@ public class homeFragment extends Fragment {
                     String expiry = child.child("expiryDate").getValue(String.class);
                     String cvv = child.child("cvv").getValue(String.class);
                     if (number != null) tvCardNumber.setText(number);
-                    if (holder != null) tvCardHolder.setText(holder);
+                    if (holder != null) {
+                        tvCardHolder.setText(holder);
+                        // Update top greeting to card holder name in uppercase as requested
+                        tvGreeting.setText(holder.toUpperCase(Locale.US));
+                    }
                     if (expiry != null) tvExpiry.setText(getString(R.string.expiry_fmt, expiry));
                     if (cvv != null) tvCvv.setText(getString(R.string.cvv_fmt, cvv));
                     break;
