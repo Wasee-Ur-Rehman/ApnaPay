@@ -38,8 +38,6 @@ public class DashboardActivity extends AppCompatActivity {
                 selectedFragment = new MyCardsFragment();
             } else if (itemId == R.id.nav_scan) {
                 selectedFragment = new ScanFragment();
-            } else if (itemId == R.id.nav_stats) {
-                selectedFragment = new StatistcsFragment();
             } else if (itemId == R.id.nav_account) {
                 selectedFragment = new AccountFragment();
             }

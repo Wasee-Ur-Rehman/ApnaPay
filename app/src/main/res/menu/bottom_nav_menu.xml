@@ -13,10 +13,6 @@
         android:icon="@drawable/scanner"
         android:title="Scan QR" />
     <item
-        android:id="@+id/nav_stats"
-        android:icon="@drawable/bar_chart"
-        android:title="Statistics" />
-    <item
         android:id="@+id/nav_account"
         android:icon="@drawable/user"
         android:title="Account" />
